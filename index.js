@@ -90,6 +90,36 @@ app.patch("/instrutores/:id", (req, resp) => {
 
 });
 
+app.put("/instrutores/:id", (req,resp) => {
+    const {id} = req.params;
+
+    const alterandoInstrutor = listaDeInstrutores.find(x => x.id === Number(id));
+
+    if(alterandoInstrutor){
+        alterandoInstrutor.nome = req.body.nome;
+        alterandoInstrutor.idade = req.body.idade;
+        alterandoInstrutor.areaDeAtuacao = req.body.areaDeAtuacao;
+
+        resp.json(alterandoInstrutor);
+    }else{
+        const novoInstrutor = req.body;
+        listaDeInstrutores.push(novoInstrutor);
+        resp.json(novoInstrutor);
+    }
+});
+
+app.delete("/instrutores/:id", (req,resp) => {
+    const {id} = req.params;
+
+    const excluirInstrutor = listaDeInstrutores.find(x => x.id === Number(id));
+
+    const pegandoIndice = listaDeInstrutores.indexOf(excluirInstrutor);
+
+    listaDeInstrutores.splice(pegandoIndice,1);
+
+    resp.json(excluirInstrutor);
+});
+
 
 
 
